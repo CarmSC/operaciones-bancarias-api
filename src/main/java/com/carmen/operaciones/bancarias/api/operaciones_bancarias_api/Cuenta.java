@@ -1,5 +1,6 @@
 package com.carmen.operaciones.bancarias.api.operaciones_bancarias_api;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,7 +12,9 @@ public class Cuenta {
       @GeneratedValue(strategy = GenerationType.IDENTITY)
       private Long id;
 
+      @Column(name="numero_cuenta")
       private String numeroCuenta;
+
       private double saldo;
 
       public Cuenta() {
