@@ -16,79 +16,79 @@ import org.springframework.web.bind.annotation.RestController;
 public class CuentaController {
 
       @Autowired
-    private CuentaRepository cuentaRepository;
+      private CuentaRepository cuentaRepository;
 
-    // Endpoint para obtener todas las cuentas
-    @GetMapping
-    public List<Cuenta> obtenerCuentas() {
-        return cuentaRepository.findAll();
-    }
+      // Endpoint para obtener todas las cuentas
+      @GetMapping
+      public List<Cuenta> obtenerCuentas() {
+            return cuentaRepository.findAll();
+      }
 
-    // Endpoint para crear una cuenta nueva
-    @PostMapping
-    public Cuenta crearCuenta(@RequestBody Cuenta cuenta) {
-        return cuentaRepository.save(cuenta);
-    }
+      // Endpoint para crear una cuenta nueva
+      @PostMapping
+      public Cuenta crearCuenta(@RequestBody Cuenta cuenta) {
+            return cuentaRepository.save(cuenta);
+      }
 
-    // Endpoint para obtener una cuenta por su ID
-    @GetMapping("/{id}")
-    public Cuenta obtenerCuentaPorId(@PathVariable Long id) {
-        return cuentaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Cuenta no encontrada con id: " + id));
-    }
+      // Endpoint para obtener una cuenta por su ID
+      @GetMapping("/{id}")
+      public Cuenta obtenerCuentaPorId(@PathVariable Long id) {
+            return cuentaRepository.findById(id)
+                        .orElseThrow(() -> new RuntimeException("Cuenta no encontrada con id: " + id));
+      }
 
-    // Endpoint para buscar una cuenta por número de cuenta
-    @GetMapping("/buscar/{numeroCuenta}")
-    public Cuenta obtenerCuentaPorNumero(@PathVariable String numeroCuenta) {
-        return cuentaRepository.findByNumeroCuenta(numeroCuenta)
-                .orElseThrow(() -> new RuntimeException("Cuenta no encontrada con número: " + numeroCuenta));
-    }
+      // Endpoint para buscar una cuenta por número de cuenta
+      @GetMapping("/buscar/{numeroCuenta}")
+      public Cuenta obtenerCuentaPorNumero(@PathVariable String numeroCuenta) {
+            return cuentaRepository.findByNumeroCuenta(numeroCuenta)
+                        .orElseThrow(() -> new RuntimeException("Cuenta no encontrada con número: " + numeroCuenta));
+      }
 
-    // Endpoint para actualizar una cuenta existente
-    @PutMapping("/{id}")
-    public Cuenta actualizarCuenta(@PathVariable Long id, @RequestBody Cuenta cuentaActualizada) {
-        return cuentaRepository.findById(id)
-                .map(cuenta -> {
-                    cuenta.setNumeroCuenta(cuentaActualizada.getNumeroCuenta());
-                    cuenta.setSaldo(cuentaActualizada.getSaldo());
-                    return cuentaRepository.save(cuenta);
-                })
-                .orElseThrow(() -> new RuntimeException("Cuenta no encontrada con id: " + id));
-    }
+      // Endpoint para actualizar una cuenta existente
+      @PutMapping("/{id}")
+      public Cuenta actualizarCuenta(@PathVariable Long id, @RequestBody Cuenta cuentaActualizada) {
+            return cuentaRepository.findById(id)
+                        .map(cuenta -> {
+                              cuenta.setNumeroCuenta(cuentaActualizada.getNumeroCuenta());
+                              cuenta.setSaldo(cuentaActualizada.getSaldo());
+                              return cuentaRepository.save(cuenta);
+                        })
+                        .orElseThrow(() -> new RuntimeException("Cuenta no encontrada con id: " + id));
+      }
 
-    // Endpoint para eliminar una cuenta por su ID
-    @DeleteMapping("/{id}")
-    public void eliminarCuenta(@PathVariable Long id) {
-        cuentaRepository.deleteById(id);
-    }
+      // Endpoint para eliminar una cuenta por su ID
+      @DeleteMapping("/{id}")
+      public void eliminarCuenta(@PathVariable Long id) {
+            cuentaRepository.deleteById(id);
+      }
 
-    // Endpoint para eliminar una cuenta por número de cuenta
-    @DeleteMapping("/eliminar/{numeroCuenta}")
-    public void eliminarCuentaPorNumero(@PathVariable String numeroCuenta) {
-        cuentaRepository.deleteByNumeroCuenta(numeroCuenta);
-    }
+      // Endpoint para eliminar una cuenta por número de cuenta
+      @DeleteMapping("/eliminar/{numeroCuenta}")
+      public void eliminarCuentaPorNumero(@PathVariable String numeroCuenta) {
+            cuentaRepository.deleteByNumeroCuenta(numeroCuenta);
+      }
 
-    // Endpoint para obtener cuentas con saldo mayor a un valor específico
-    @GetMapping("/saldoMayorQue/{saldo}")
-    public List<Cuenta> obtenerCuentasConSaldoMayorQue(@PathVariable double saldo) {
-        return cuentaRepository.findBySaldoGreaterThan(saldo);
-    }
+      // Endpoint para obtener cuentas con saldo mayor a un valor específico
+      @GetMapping("/saldoMayorQue/{saldo}")
+      public List<Cuenta> obtenerCuentasConSaldoMayorQue(@PathVariable double saldo) {
+            return cuentaRepository.findBySaldoGreaterThan(saldo);
+      }
 
-    // Endpoint para obtener cuentas con saldo menor a un valor específico
-    @GetMapping("/saldoMenorQue/{saldo}")
-    public List<Cuenta> obtenerCuentasConSaldoMenorQue(@PathVariable double saldo) {
-        return cuentaRepository.findBySaldoLessThan(saldo);
-    }
+      // Endpoint para obtener cuentas con saldo menor a un valor específico
+      @GetMapping("/saldoMenorQue/{saldo}")
+      public List<Cuenta> obtenerCuentasConSaldoMenorQue(@PathVariable double saldo) {
+            return cuentaRepository.findBySaldoLessThan(saldo);
+      }
 
-    // Endpoint para obtener cuentas por un rango de saldo
-    @GetMapping("/saldoEntre/{minSaldo}/{maxSaldo}")
-    public List<Cuenta> obtenerCuentasPorRangoDeSaldo(@PathVariable double minSaldo, @PathVariable double maxSaldo) {
-        return cuentaRepository.findBySaldoBetween(minSaldo, maxSaldo);
-    }
+      // Endpoint para obtener cuentas por un rango de saldo
+      @GetMapping("/saldoEntre/{minSaldo}/{maxSaldo}")
+      public List<Cuenta> obtenerCuentasPorRangoDeSaldo(@PathVariable double minSaldo, @PathVariable double maxSaldo) {
+            return cuentaRepository.findBySaldoBetween(minSaldo, maxSaldo);
+      }
 
-    // Endpoint para obtener todas las cuentas ordenadas por saldo descendente
-    @GetMapping("/ordenadasPorSaldoDesc")
-    public List<Cuenta> obtenerCuentasOrdenadasPorSaldoDesc() {
-        return cuentaRepository.findAllByOrderBySaldoDesc();
-    }
+      // Endpoint para obtener todas las cuentas ordenadas por saldo descendente
+      @GetMapping("/ordenadasPorSaldoDesc")
+      public List<Cuenta> obtenerCuentasOrdenadasPorSaldoDesc() {
+            return cuentaRepository.findAllByOrderBySaldoDesc();
+      }
 }
